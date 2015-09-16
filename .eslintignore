@@ -1,0 +1,7 @@
+# node_modules ignored by default
+
+# Ignore webpack rules and configs
+webpack/**
+
+# Ignore built files
+dist/

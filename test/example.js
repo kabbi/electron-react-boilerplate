@@ -1,7 +1,7 @@
-var chai = require('chai')
+var chai = require('chai');
 
-describe('description', function () {
-  it('description', function () {
-    // body...
-  })
-})
+describe('description', function() {
+    it('description', function() {
+        // body...
+    });
+});

@@ -1,9 +1,6 @@
-import keyMirror from 'keymirror'
-
+import keyMirror from 'keymirror';
 
 export default keyMirror({
-
-  // Routes
-  ROUTE_CHANGE: null
-
-})
+    // Routes
+    ROUTE_CHANGE: null
+});
