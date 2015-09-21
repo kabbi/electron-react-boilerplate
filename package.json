@@ -72,11 +72,25 @@
     "webpack-target-electron-renderer": "^0.1.0"
   },
   "dependencies": {
+    "bootstrap": "^3.3.5",
+    "bootswatch": "^3.3.5",
+    "brace": "^0.5.1",
     "electron-debug": "^0.2.1",
+    "escodegen": "^1.7.0",
+    "esprima": "^2.6.0",
     "flux": "^2.0.3",
     "keymirror": "^0.1.1",
+    "less": "^2.5.1",
+    "less-loader": "^2.2.1",
+    "msgpack": "^0.2.6",
     "object-assign": "^4.0.1",
     "react": "^0.13.3",
-    "react-router": "^1.0.0-rc1"
+    "react-ace": "^2.3.0",
+    "react-ace-wrapper": "^1.0.0",
+    "react-bootstrap": "^0.25.2",
+    "react-mixin": "^3.0.0",
+    "react-router": "^1.0.0-rc1",
+    "reflux": "^0.2.12",
+    "uuid": "^2.0.1"
   }
 }

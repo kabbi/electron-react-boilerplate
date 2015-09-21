@@ -1,4 +1,5 @@
 import React from 'react';
+import { Grid, Row, Col } from 'react-bootstrap';
 
 export default class AppContainer extends React.Component {
     static propTypes = {
@@ -7,9 +8,13 @@ export default class AppContainer extends React.Component {
 
     render() {
         return (
-            <div>
-                {this.props.children}
-            </div>
+            <Grid>
+                <Row>
+                    <Col xs={10} xsOffset={1}>
+                        {this.props.children}
+                    </Col>
+                </Row>
+            </Grid>
         );
     }
 }

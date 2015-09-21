@@ -12,10 +12,9 @@ app.on('window-all-closed', function() {
     if (process.platform !== 'darwin') app.quit();
 });
 
-
 app.on('ready', function() {
 
-    mainWindow = new BrowserWindow({ width: 800, height: 600 });
+    mainWindow = new BrowserWindow({ width: 400, height: 600 });
 
     /* eslint-disable no-path-concat */
     if (process.env.HOT) {

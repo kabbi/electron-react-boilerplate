@@ -1,0 +1,15 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "kabbi",
+  "license": "ISC",
+  "dependencies": {
+    "canvas": "^1.2.9",
+    "request-promise": "^0.4.3"
+  }
+}
