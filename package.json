@@ -75,7 +75,9 @@
     "bootstrap": "^3.3.5",
     "bootswatch": "^3.3.5",
     "brace": "^0.5.1",
+    "bugger-v8-client": "kabbi/bugger-v8-client",
     "electron-debug": "^0.2.1",
+    "es6-promise": "^3.0.2",
     "escodegen": "^1.7.0",
     "esprima": "^2.6.0",
     "flux": "^2.0.3",
@@ -91,6 +93,7 @@
     "react-mixin": "^3.0.0",
     "react-router": "^1.0.0-rc1",
     "reflux": "^0.2.12",
+    "setflags": "0.0.2",
     "uuid": "^2.0.1"
   }
 }

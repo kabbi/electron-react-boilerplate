@@ -1,11 +1,17 @@
 import Reflux from 'reflux';
 import uuid from 'uuid';
 import CellActions from '../actions/CellActions';
+import ExecutorActions from '../actions/ExecutorActions';
 
 export default Reflux.createStore({
     listenables: CellActions,
 
+    getCellById(id) {
+        return this.cells.filter((cell) => cell.id === id)[0];
+    },
+
     onCreateCell(insertAfterIndex, cell) {
+        console.log('Creating cell at', insertAfterIndex, cell);
         cell.id = uuid.v1();
         this.cells.splice(insertAfterIndex + 1, 0, cell);
         this.recalculateLineNumbers();
@@ -13,19 +19,31 @@ export default Reflux.createStore({
     },
 
     onRemoveCell(index) {
+        console.log('Removing cell at', index);
         this.cells.splice(index, 1);
         this.recalculateLineNumbers();
         this.updateList();
     },
 
     onUpdateCellContent(cell, content) {
-        cell.content = content;
+        this.getCellById(cell.id).content = content;
         this.recalculateLineNumbers();
         this.updateList();
     },
 
+    onUpdateCellResult(cell, result, successOrFail) {
+        console.log('Updating cell result', cell.id, result);
+        var cell = this.getCellById(cell.id);
+        cell.result = result;
+        cell.status = successOrFail ? 'success' : 'fail';
+        this.updateList();
+    },
+
     onEvaluateCell(cell) {
-        // TODO: implement
+        console.log('Sending cell to evaluation', cell);
+        CellActions.evaluateCell.promise(
+            ExecutorActions.evaluateCell.triggerPromise(cell)
+        );
     },
 
     recalculateLineNumbers() {

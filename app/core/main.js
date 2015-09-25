@@ -1,12 +1,14 @@
+require('es6-promise').polyfill();
 var app = require('app');
 var BrowserWindow = require('browser-window');
+var executor = require('./executor');
 var Menu = require('menu');
 var menu, template;
 
 require('electron-debug')();
-require('crash-reporter').start();
+// require('crash-reporter').start();
 
-var mainWindow = null;
+var mainWindow = null, mainExecutor = null;
 
 app.on('window-all-closed', function() {
     if (process.platform !== 'darwin') app.quit();
@@ -14,7 +16,8 @@ app.on('window-all-closed', function() {
 
 app.on('ready', function() {
 
-    mainWindow = new BrowserWindow({ width: 400, height: 600 });
+    mainWindow = new BrowserWindow({ width: 500, height: 600 });
+    mainExecutor = mainWindow._executor = new executor.Executor(mainWindow);
 
     /* eslint-disable no-path-concat */
     if (process.env.HOT) {
@@ -25,12 +28,9 @@ app.on('ready', function() {
     /* eslint-enable no-path-concat */
 
     mainWindow.on('closed', function() {
+        mainExecutor.destroy();
         mainWindow = null;
     });
-
-    // if (process.env.NODE_ENV === 'development') {
-    //   mainWindow.openDevTools()
-    // }
 
     if (process.platform === 'darwin') {
         template = [{

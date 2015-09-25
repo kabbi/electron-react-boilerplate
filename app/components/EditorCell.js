@@ -21,8 +21,8 @@ export default class EditorCell extends React.Component {
                 mac: 'Command-Enter',
                 sender: 'editor|cli'
             },
-            exec: function(env, args, request) {
-                alert('HI!');
+            exec: (env, args, request) => {
+                CellActions.evaluateCell(this.props.cell);
             }
         });
     }

@@ -3,11 +3,17 @@ import Reflux from 'reflux';
 import {
     Glyphicon,
     ButtonToolbar,
+    OverlayTrigger,
+    DropdownButton,
+    MenuItem,
+    Tooltip,
     Button
 } from 'react-bootstrap';
 import Mixin from '../utils/Mixin';
 import CellActions from '../actions/CellActions';
 import CellStore from '../stores/CellStore';
+import ExecutorStore from '../stores/ExecutorStore';
+import IconizedButton from './IconizedButton';
 import Toolbar from './Toolbar';
 import CodeCell from './CodeCell';
 import TextCell from './TextCell';
@@ -30,19 +36,27 @@ export default class Notepad extends React.Component {
     }
 
     state = {
-        cells: CellStore.getInitialState()
+        cells: CellStore.getInitialState(),
+        kernel: ExecutorStore.getInitialState()
     }
 
     componentDidMount() {
-        this.unsubscribe = CellStore.listen(::this.handleCellsUpdate);
+        this.unsubscribe = [
+            CellStore.listen(::this.handleCellsUpdate),
+            ExecutorStore.listen(::this.handleExecutorUpdate),
+        ];
     }
 
     componentWillUnmount() {
-        this.unsubscribe();
+        this.unsubscribe.forEach((item) => item());
     }
 
     handleCellsUpdate(cells) {
         this.setState({cells});
+    }
+
+    handleExecutorUpdate(kernel) {
+        this.setState(kernel);
     }
 
     handleNewCell(index, type) {
@@ -61,10 +75,33 @@ export default class Notepad extends React.Component {
         this.forceUpdate();
     }
 
+    getKernelState() {
+        const statusToClass = {
+            running: 'success',
+            exited: 'warning',
+            stopped: 'default'
+        };
+        return statusToClass[this.state.kernel.status];
+    }
+
     render() {
         return (
             <div>
                 <h3 className="page-header">
+                    <ButtonToolbar className="pull-right">
+                        <DropdownButton bsStyle={this.getKernelState()} bsSize="small" id="kernelDropdown"
+                                        title={'kernel: ' + this.state.kernel.status}>
+                            <MenuItem disabled={!this.state.kernel.running}>
+                                Start
+                            </MenuItem>
+                            <MenuItem disabled={!this.state.kernel.running}>
+                                Kill
+                            </MenuItem>
+                            <MenuItem>
+                                Log
+                            </MenuItem>
+                        </DropdownButton>
+                    </ButtonToolbar>
                     Project name here
                 </h3>
                 {this.state.cells.map((cell, index) => {
@@ -79,18 +116,14 @@ export default class Notepad extends React.Component {
                             <div style={{visibility: cell.visible ? 'visible' : 'hidden'}}>
                                 <strong className="text-muted">{Notepad.cellTypes[cell.type].help}</strong>
                                 <ButtonToolbar className="pull-right">
-                                    <Button bsStyle="link" bsSize="xsmall" onClick={this.handleNewCell.bind(this, index, 'code')}>
-                                        <Glyphicon glyph="grain"/>
-                                    </Button>
-                                    <Button bsStyle="link" bsSize="xsmall" onClick={this.handleNewCell.bind(this, index, 'code')}>
-                                        <Glyphicon glyph="console"/>
-                                    </Button>
-                                    <Button bsStyle="link" bsSize="xsmall" onClick={this.handleNewCell.bind(this, index, 'text')}>
-                                        <Glyphicon glyph="pencil"/>
-                                    </Button>
-                                    <Button bsStyle="link" bsSize="xsmall" onClick={this.handleRemoveCell.bind(this, index)} disabled={this.state.cells.length == 1}>
-                                        <Glyphicon glyph="remove"/>
-                                    </Button>
+                                    <IconizedButton icon="grain" label="Coffee / JS"
+                                        onClick={() => {}}/>
+                                    <IconizedButton icon="console" label="New code cell"
+                                        onClick={this.handleNewCell.bind(this, index, 'code')}/>
+                                    <IconizedButton icon="pencil" label="New text cell"
+                                        onClick={this.handleNewCell.bind(this, index, 'text')}/>
+                                    <IconizedButton icon="remove" label="Remove this cell"
+                                        onClick={this.handleRemoveCell.bind(this, index)}/>
                                 </ButtonToolbar>
                             </div>
                         </div>
