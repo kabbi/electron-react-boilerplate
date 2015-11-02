@@ -1,3 +1,13 @@
+Nodepad
+=======
+
+Live js coding and prototyping environment with cool code and result visualizations in the future. Inspired by [tonicdev](http://tonicdev.com/), [devcards](https://github.com/bhauman/devcards), [Jupyter](http://jupyter.org/) (former IPython), Wolfram Mathematica and others.
+
+Stay tuned!
+
+The early development screenshot for you to star:
+![Really screenshot](./docs/screenshot.png)
+
 # electron-react-boilerplate
 
 [![NPM version][npm-image]][npm-url]
